@@ -198,6 +198,8 @@
 
   .submitting-msg { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 0.95rem; }
 
+  [hidden] { display: none !important; }
+
   .payment-banner {
     background: var(--success-bg); color: var(--success-fg);
     border: 1px solid #c3e6cb; border-radius: 7px;
@@ -418,9 +420,13 @@
         if (!el.name || !(el.name in data)) return;
         if (el.type === 'checkbox') el.checked = data[el.name];
         else el.value = data[el.name];
-        // Trigger dependent visibility
-        if (el.tagName === 'SELECT') el.dispatchEvent(new Event('change'));
       });
+      // Re-run visibility for all title selects and newsletter
+      document.querySelectorAll('select[onchange*="toggleOtherTitle"]').forEach(sel => {
+        const match = sel.getAttribute('onchange').match(/toggleOtherTitle\(this,\s*'([^']+)'\)/);
+        if (match) toggleOtherTitle(sel, match[1]);
+      });
+      document.getElementById('newsletter').dispatchEvent(new Event('change'));
       sessionStorage.removeItem('fbwra_details_form');
     } catch(e) { /* ignore */ }
   }
