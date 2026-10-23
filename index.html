@@ -334,7 +334,7 @@
     <div id="success-area" hidden>
       <div class="success-msg">
         ✓ Thank you — your details have been received!<br>
-        We will send you your membership information as soon as we can.
+        We will send you your membership details as soon as we can.
       </div>
     </div>
 
@@ -346,7 +346,7 @@
 </main>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcsbhEwh6TekUW0teXV2g7_cIj3qOMBN-7XuQucLocbyzbAcnCVWv8AzbyoTeygbXJZA/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySCC3Vm9xiDMD1g9oYJ_zQ_z6qyxBts_GMPSPC5auCcZ3IjndiDGa9Xo-CoZhaFTGdbA/exec';
   const STRIPE_POSTAL_LINK = 'https://buy.stripe.com/cNidR26QK4x8atUfFjgbm02';
 
   let memberCount = 0;
@@ -357,8 +357,9 @@
     const params = new URLSearchParams(location.search);
     if (params.get('paid_post') === '1') {
       postalFeePaid = true;
+      const sessionId = params.get('session_id') || '';
       history.replaceState(null, '', location.pathname);
-      restoreForm();
+      restoreForm(sessionId);
       // Show paid banner if Post is selected
       const nl = document.getElementById('newsletter');
       if (nl && nl.value === 'post') {
@@ -409,7 +410,7 @@
     window.location.href = STRIPE_POSTAL_LINK + '?success_url=' + encodeURIComponent(returnUrl);
   }
 
-  function restoreForm() {
+  function restoreForm(sessionId) {
     const saved = sessionStorage.getItem('fbwra_details_form');
     if (!saved) return;
     try {
@@ -429,6 +430,7 @@
         if (match) toggleOtherTitle(sel, match[1]);
       });
       document.getElementById('newsletter').dispatchEvent(new Event('change'));
+      if (sessionId) sessionStorage.setItem('fbwra_postal_session_id', sessionId);
       sessionStorage.removeItem('fbwra_details_form');
     } catch(e) { /* ignore */ }
   }
@@ -505,7 +507,8 @@
       locality: document.getElementById('locality').value,
       postcode: document.getElementById('postcode').value,
       newsletter: document.getElementById('newsletter').value,
-      payment: 'previously_received',
+      payment: postalFeePaid ? 'postal_fee_£6' : 'previously_received',
+      stripe_session_id: sessionStorage.getItem('fbwra_postal_session_id') || '',
     };
     let n = 1;
     while (document.getElementById('member-' + n)) {
