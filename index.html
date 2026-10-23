@@ -1,0 +1,476 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>FBWRA Membership Details</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+
+<style>
+  :root {
+    --bg: #d8f2f7;
+    --card: #d8f2f7;
+    --header-bg: #d8f2f7;
+    --header-fg: #4579D1;
+    --accent: #1a3a6b;
+    --accent-light: #2a5298;
+    --fg: #1a1a2e;
+    --muted: #4a5568;
+    --border: #888888;
+    --header-sub: #2a5298;
+    --input-bg: #ffffff;
+    --error: #c0392b;
+    --success-bg: #d4edda;
+    --success-fg: #155724;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1e38; --card: #0f1e38; --header-bg: #0f1e38;
+      --header-fg: #7aadff; --accent: #7aadff; --accent-light: #a0c4ff;
+      --fg: #e8edf5; --muted: #9aa8bc; --border: #3a4d6a;
+      --header-sub: #a0c4ff; --input-bg: #1a2d4a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1e38; --card: #0f1e38; --header-bg: #0f1e38;
+    --header-fg: #7aadff; --accent: #7aadff; --accent-light: #a0c4ff;
+    --fg: #e8edf5; --muted: #9aa8bc; --border: #3a4d6a;
+    --header-sub: #a0c4ff; --input-bg: #1a2d4a;
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+
+  @media (max-width: 600px) { body { font-size: 1.19rem; } }
+
+  .site-header {
+    background: var(--header-bg);
+    color: var(--header-fg);
+    text-align: center;
+    padding: 2rem max(1.5rem, env(safe-area-inset-left, 0px)) 0.75rem;
+  }
+
+  .site-header img { width: 100px; height: auto; display: block; margin: 0 auto 1rem; }
+
+  .site-header h1 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    color: var(--header-fg);
+  }
+
+  .site-header h2 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--header-sub);
+    letter-spacing: 0.08em;
+  }
+
+  .header-intro {
+    font-size: 0.9rem;
+    color: var(--fg);
+    margin: 0.75rem auto 0;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .form-wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding-inline: max(1rem, env(safe-area-inset-left, 0px));
+    padding-block: 0 2rem;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+    padding: 1.75rem 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+
+  .field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .field label { font-size: 0.875rem; font-weight: 600; color: var(--fg); }
+
+  .field label .req,
+  .consent-block label .req { color: var(--error); margin-left: 2px; }
+
+  .field input, .field select, .field textarea {
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+    width: 100%;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(26,58,107,0.15);
+  }
+
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 400px) { .field-row { grid-template-columns: 1fr; } }
+
+  .consent-block {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    margin-bottom: 1.5rem; font-size: 0.875rem; color: var(--muted);
+  }
+
+  .consent-block input[type="checkbox"] {
+    accent-color: var(--accent); width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+  }
+
+  .btn-submit {
+    width: 100%; background: var(--accent); color: #fff; border: none;
+    border-radius: 7px; font-family: inherit; font-size: 1.05rem; font-weight: 700;
+    padding: 0.85rem 1rem; cursor: pointer; letter-spacing: 0.03em; transition: background 0.2s;
+  }
+  .btn-submit:hover { background: var(--accent-light); }
+  .btn-submit:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  .success-msg {
+    background: var(--success-bg); color: var(--success-fg);
+    border-radius: 8px; padding: 1.25rem 1.5rem;
+    text-align: center; font-weight: 600; font-size: 1rem; line-height: 1.5;
+  }
+
+  .field-hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+
+  .privacy-note { font-size: 0.8rem; color: var(--muted); font-style: italic; margin: 0 0 1.5rem; }
+
+  .additional-member {
+    border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 1rem; margin-bottom: 1rem; position: relative;
+  }
+
+  .additional-member .member-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;
+  }
+
+  .additional-member .member-label { font-weight: 600; font-size: 0.875rem; color: var(--accent); }
+
+  .btn-remove { background: none; border: none; color: var(--error); cursor: pointer; font-size: 0.8rem; padding: 0; font-family: inherit; }
+
+  .btn-add {
+    background: none; border: 1.5px dashed var(--accent); border-radius: 7px;
+    color: var(--accent); cursor: pointer; font-family: inherit; font-size: 0.9rem;
+    font-weight: 600; padding: 0.6rem 1rem; width: 100%; margin-bottom: 1.5rem; transition: background 0.2s;
+  }
+  .btn-add:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+
+  .submitting-msg { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 0.95rem; }
+</style>
+
+<header class="site-header">
+  <img src="fbwra_logo_clean2.png" alt="FBWRA Logo">
+  <h1>Friern Barnet &amp; Whetstone Residents Association</h1>
+  <h2>Membership Details</h2>
+  <p class="header-intro">For those who have paid but not submitted details. This information is necessary for our records and for GDPR compliance.</p>
+</header>
+
+<main class="form-wrap">
+  <div class="card">
+
+    <div id="form-area">
+      <p style="font-size:0.78rem;color:var(--error);margin:0 0 0.75rem;"><span style="font-weight:700;">*</span> Indicates required field</p>
+
+      <p class="section-title">Personal Details</p>
+      <div class="field-group" id="primary-member">
+        <div style="display:flex; gap:0.75rem; align-items:flex-end;">
+          <div class="field" style="width:20%;">
+            <label for="title">Title <span class="req">*</span></label>
+            <select id="title" name="title" required onchange="toggleOtherTitle(this, 'title-other')">
+              <option value="">—</option>
+              <option>Mr</option><option>Mrs</option><option>Ms</option>
+              <option>Miss</option><option>Dr</option><option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field" id="title-other" hidden style="flex:1;">
+            <label for="title-other-input">Please specify</label>
+            <input type="text" id="title-other-input" name="title_other">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="first-name">First name <span class="req">*</span></label>
+            <input type="text" id="first-name" name="first_name" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="last-name">Last name <span class="req">*</span></label>
+            <input type="text" id="last-name" name="last_name" autocomplete="family-name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Telephone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel">
+        </div>
+      </div>
+
+      <p class="privacy-note">We do not use your phone numbers or email addresses for anything other than FBWRA-related matters.</p>
+
+      <div id="additional-members"></div>
+      <button type="button" class="btn-add" onclick="addMember()">+ Add another household member</button>
+
+      <p class="section-title">Address</p>
+      <div class="field-group">
+        <div class="field">
+          <label for="door">Door no. / House name <span class="req">*</span></label>
+          <input type="text" id="door" name="door" autocomplete="address-line1" required>
+        </div>
+        <div class="field">
+          <label for="address1">Address line 1 <span class="req">*</span></label>
+          <input type="text" id="address1" name="address1" autocomplete="address-line2" required>
+        </div>
+        <div class="field">
+          <label for="address2">Address line 2</label>
+          <input type="text" id="address2" name="address2" autocomplete="address-line3">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="locality">Locality <span class="req">*</span></label>
+            <input type="text" id="locality" name="locality" placeholder="e.g. Whetstone" required>
+          </div>
+          <div class="field">
+            <label for="postcode">Postcode <span class="req">*</span></label>
+            <input type="text" id="postcode" name="postcode" autocomplete="postal-code" required>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-title">Newsletter Delivery <span style="text-transform:none;">(quarterly)</span> <span class="req">*</span></p>
+      <div class="field-group" style="margin-bottom:1.5rem;">
+        <div class="field" style="width:100%;">
+          <select id="newsletter" name="newsletter" required>
+            <option value="">Click to choose</option>
+            <option value="email">Email</option>
+            <option value="hand">By hand (Association area only)</option>
+            <option value="post">Post (please add £6 to membership fee for p&amp;p)</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="section-title">Declaration</p>
+      <div class="consent-block">
+        <input type="checkbox" id="consent" name="consent" required autocomplete="off">
+        <label for="consent">I/We apply to join Friern Barnet &amp; Whetstone Residents' Association and agree to be bound by the rules and constitution of the Association. <span class="req">*</span></label>
+      </div>
+
+      <div class="consent-block">
+        <input type="checkbox" id="privacy" name="privacy" required autocomplete="off">
+        <label for="privacy">I have read and accept the FBWRA privacy notice below. <span class="req">*</span></label>
+      </div>
+
+      <div style="font-size:0.8rem;color:var(--muted);background:color-mix(in srgb, var(--accent) 6%, var(--card));border:1px solid var(--border);border-radius:7px;padding:1rem;margin-bottom:1.5rem;line-height:1.6;">
+        <strong style="color:var(--fg);">Data Protection</strong><br>
+        The information you provide in this form is provided by you on a voluntary basis and will be used by FBWRA on the basis of our legitimate interests, such as maintaining our membership records, sending you the Newsletter, communicating with you and in connection with our activities as a residents' association. When you submit this form, we also automatically record technical information including your IP address, browser type, and screen resolution for security, fraud prevention, and audit purposes. Please see our Data Protection Notice on our website at <a href="https://www.fbwra.org/data-protection/" target="_blank" style="color:var(--accent);">fbwra.org</a>.
+      </div>
+
+      <button class="btn-submit" type="button" onclick="submitForm()">Submit Details</button>
+    </div>
+
+    <div id="success-area" hidden>
+      <div class="success-msg">
+        ✓ Thank you — your details have been received!<br>
+        We will send you your membership details as soon as we can.
+      </div>
+    </div>
+
+    <div id="submitting-area" hidden>
+      <div class="submitting-msg">Submitting your details…</div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkB7XrMJYwUjc5czSJOwK_9At1qcgs-hKt94C6h1NKRLJC5Io7e6NT7jCBMpvuIMwX/exec';
+
+  let memberCount = 0;
+
+  window.addEventListener('pageshow', () => {
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+      else el.value = '';
+    });
+  });
+
+  function toggleOtherTitle(sel, wrapperId) {
+    document.getElementById(wrapperId).hidden = sel.value !== 'Other';
+  }
+
+  function addMember() {
+    memberCount++;
+    const n = memberCount;
+    const container = document.getElementById('additional-members');
+    const div = document.createElement('div');
+    div.className = 'additional-member';
+    div.id = 'member-' + n;
+    div.innerHTML = `
+      <div class="member-header">
+        <span class="member-label">Additional Household Member ${n}</span>
+        <button type="button" class="btn-remove" onclick="removeMember(${n})">Remove</button>
+      </div>
+      <div class="field-group">
+        <div style="display:flex; gap:0.75rem; align-items:flex-end;">
+          <div class="field" style="width:20%;">
+            <label for="m${n}-title">Title</label>
+            <select id="m${n}-title" name="member${n}_title" onchange="toggleOtherTitle(this, 'm${n}-other')">
+              <option value="">—</option>
+              <option>Mr</option><option>Mrs</option><option>Ms</option><option>Miss</option><option>Dr</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field" id="m${n}-other" hidden style="flex:1;">
+            <label for="m${n}-title-text">Please specify</label>
+            <input type="text" id="m${n}-title-text" name="member${n}_title_other">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="m${n}-first">First name</label>
+            <input type="text" id="m${n}-first" name="member${n}_first">
+          </div>
+          <div class="field">
+            <label for="m${n}-last">Last name</label>
+            <input type="text" id="m${n}-last" name="member${n}_last">
+          </div>
+        </div>
+        <div class="field">
+          <label for="m${n}-email">Email address</label>
+          <input type="email" id="m${n}-email" name="member${n}_email">
+        </div>
+        <div class="field">
+          <label for="m${n}-phone">Telephone</label>
+          <input type="tel" id="m${n}-phone" name="member${n}_phone">
+        </div>
+      </div>`;
+    container.appendChild(div);
+  }
+
+  function removeMember(n) {
+    const el = document.getElementById('member-' + n);
+    if (el) el.remove();
+  }
+
+  function gatherData() {
+    const data = {
+      title: document.getElementById('title').value,
+      title_other: document.getElementById('title-other-input').value,
+      first_name: document.getElementById('first-name').value,
+      last_name: document.getElementById('last-name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      door: document.getElementById('door').value,
+      address1: document.getElementById('address1').value,
+      address2: document.getElementById('address2').value,
+      locality: document.getElementById('locality').value,
+      postcode: document.getElementById('postcode').value,
+      newsletter: document.getElementById('newsletter').value,
+      payment: 'previously_received',
+    };
+    let n = 1;
+    while (document.getElementById('member-' + n)) {
+      data[`member${n}_title`] = document.getElementById(`m${n}-title`)?.value || '';
+      data[`member${n}_title_other`] = document.getElementById(`m${n}-title-text`)?.value || '';
+      data[`member${n}_first`] = document.getElementById(`m${n}-first`)?.value || '';
+      data[`member${n}_last`] = document.getElementById(`m${n}-last`)?.value || '';
+      data[`member${n}_email`] = document.getElementById(`m${n}-email`)?.value || '';
+      data[`member${n}_phone`] = document.getElementById(`m${n}-phone`)?.value || '';
+      n++;
+    }
+    return data;
+  }
+
+  async function submitForm() {
+    const required = document.querySelectorAll('[required]');
+    let ok = true;
+    required.forEach(el => {
+      if (el.type === 'checkbox' && !el.checked) ok = false;
+      if (el.type !== 'checkbox' && !el.value.trim()) ok = false;
+    });
+    if (!ok) {
+      alert('Please fill in all required fields and tick both checkboxes.');
+      return;
+    }
+
+    document.getElementById('form-area').hidden = true;
+    document.getElementById('submitting-area').hidden = false;
+
+    const data = gatherData();
+    data._meta_timestamp = new Date().toISOString();
+    data._meta_useragent = navigator.userAgent;
+    data._meta_language  = navigator.language;
+    data._meta_referrer  = document.referrer || '(direct / none)';
+    data._meta_screen    = screen.width + 'x' + screen.height;
+
+    try {
+      const ipRes = await fetch('https://api.ipify.org?format=json');
+      const ipJson = await ipRes.json();
+      data._meta_ip = ipJson.ip;
+    } catch (_) {
+      data._meta_ip = '(unavailable)';
+    }
+
+    fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+      .then(r => r.json())
+      .then(res => {
+        document.getElementById('submitting-area').hidden = true;
+        if (res.status === 'ok') {
+          document.getElementById('success-area').hidden = false;
+        } else {
+          document.getElementById('form-area').hidden = false;
+          alert('Something went wrong: ' + (res.message || 'please try again.'));
+        }
+      })
+      .catch(() => {
+        document.getElementById('submitting-area').hidden = true;
+        document.getElementById('form-area').hidden = false;
+        alert('Could not submit the form. Please check your connection and try again.');
+      });
+  }
+</script>
+
+</body></html>
