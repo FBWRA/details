@@ -1,4 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>FBWRA Membership Details</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
@@ -198,6 +197,13 @@
   .btn-add:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
 
   .submitting-msg { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 0.95rem; }
+
+  .payment-banner {
+    background: var(--success-bg); color: var(--success-fg);
+    border: 1px solid #c3e6cb; border-radius: 7px;
+    padding: 0.75rem 1rem; font-size: 0.875rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
 </style>
 
 <header class="site-header">
@@ -287,8 +293,19 @@
             <option value="">Click to choose</option>
             <option value="email">Email</option>
             <option value="hand">By hand (Association area only)</option>
-            <option value="post">Post (please add £6 to membership fee for p&amp;p)</option>
+            <option value="post">Post (£6 postal fee applies)</option>
           </select>
+        </div>
+      </div>
+
+      <!-- Postal fee panel — shown only when Post is selected -->
+      <div id="postal-fee-panel" hidden style="background:color-mix(in srgb, var(--accent) 6%, var(--card));border:1.5px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1.5rem;">
+        <div id="postal-unpaid">
+          <p style="margin:0 0 0.75rem;font-size:0.875rem;color:var(--fg);">A £6 postal fee applies. On the payment page, enter £6 (or more if you'd like to donate). You'll be returned here to complete your submission.</p>
+          <button type="button" class="btn-submit" style="font-size:0.95rem;padding:0.7rem 1rem;" onclick="goToPostalPayment()">Pay £6 postal fee</button>
+        </div>
+        <div id="postal-paid" hidden class="payment-banner" style="margin:0;">
+          ✓ Postal fee paid.
         </div>
       </div>
 
@@ -326,16 +343,87 @@
 </main>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcsbhEwh6TekUW0teXV2g7_cIj3qOMBN-7XuQucLocbyzbAcnCVWv8AzbyoTeygbXJZA/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkB7XrMJYwUjc5czSJOwK_9At1qcgs-hKt94C6h1NKRLJC5Io7e6NT7jCBMpvuIMwX/exec';
+  const STRIPE_POSTAL_LINK = 'https://buy.stripe.com/bJe5kw5MG2p0dG650Fgbm00';
 
   let memberCount = 0;
 
+  let postalFeePaid = false;
+
   window.addEventListener('pageshow', () => {
-    document.querySelectorAll('input, select, textarea').forEach(el => {
-      if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
-      else el.value = '';
+    const params = new URLSearchParams(location.search);
+    if (params.get('paid_post') === '1') {
+      postalFeePaid = true;
+      restoreForm();
+      // Show paid banner if Post is selected
+      const nl = document.getElementById('newsletter');
+      if (nl && nl.value === 'post') {
+        document.getElementById('postal-fee-panel').hidden = false;
+        document.getElementById('postal-unpaid').hidden = true;
+        document.getElementById('postal-paid').hidden = false;
+      }
+    } else {
+      postalFeePaid = false;
+      document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
+        else el.value = '';
+      });
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('newsletter').addEventListener('change', function() {
+      const panel = document.getElementById('postal-fee-panel');
+      if (this.value === 'post') {
+        panel.hidden = false;
+        if (postalFeePaid) {
+          document.getElementById('postal-unpaid').hidden = true;
+          document.getElementById('postal-paid').hidden = false;
+        } else {
+          document.getElementById('postal-unpaid').hidden = false;
+          document.getElementById('postal-paid').hidden = true;
+        }
+      } else {
+        panel.hidden = true;
+      }
     });
   });
+
+  function goToPostalPayment() {
+    // Save form data to sessionStorage
+    const data = {};
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      if (!el.name) return;
+      if (el.type === 'checkbox') data[el.name] = el.checked;
+      else data[el.name] = el.value;
+    });
+    // Also save additional member count
+    data['_memberCount'] = memberCount;
+    sessionStorage.setItem('fbwra_details_form', JSON.stringify(data));
+    // Redirect to Stripe; return URL includes ?paid_post=1
+    const returnUrl = location.origin + location.pathname + '?paid_post=1';
+    window.location.href = STRIPE_POSTAL_LINK + '?success_url=' + encodeURIComponent(returnUrl);
+  }
+
+  function restoreForm() {
+    const saved = sessionStorage.getItem('fbwra_details_form');
+    if (!saved) return;
+    try {
+      const data = JSON.parse(saved);
+      // Restore additional members first
+      const count = parseInt(data['_memberCount'] || 0);
+      for (let i = 0; i < count; i++) addMember();
+      // Restore all fields
+      document.querySelectorAll('input, select, textarea').forEach(el => {
+        if (!el.name || !(el.name in data)) return;
+        if (el.type === 'checkbox') el.checked = data[el.name];
+        else el.value = data[el.name];
+        // Trigger dependent visibility
+        if (el.tagName === 'SELECT') el.dispatchEvent(new Event('change'));
+      });
+      sessionStorage.removeItem('fbwra_details_form');
+    } catch(e) { /* ignore */ }
+  }
 
   function toggleOtherTitle(sel, wrapperId) {
     document.getElementById(wrapperId).hidden = sel.value !== 'Other';
@@ -436,6 +524,13 @@
       return;
     }
 
+    // Block if Post selected but fee not paid
+    const newsletter = document.getElementById('newsletter').value;
+    if (newsletter === 'post' && !postalFeePaid) {
+      alert('Please pay the £6 postal fee before submitting.');
+      return;
+    }
+
     document.getElementById('form-area').hidden = true;
     document.getElementById('submitting-area').hidden = false;
 
@@ -472,5 +567,3 @@
       });
   }
 </script>
-
-</body></html>
