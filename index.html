@@ -356,6 +356,7 @@
     const params = new URLSearchParams(location.search);
     if (params.get('paid_post') === '1') {
       postalFeePaid = true;
+      history.replaceState(null, '', location.pathname);
       restoreForm();
       // Show paid banner if Post is selected
       const nl = document.getElementById('newsletter');
@@ -519,6 +520,13 @@
   }
 
   async function submitForm() {
+    // Block if Post selected but fee not paid
+    const newsletter = document.getElementById('newsletter').value;
+    if (newsletter === 'post' && !postalFeePaid) {
+      alert('Please pay the £6 postal fee before submitting.');
+      return;
+    }
+
     const required = document.querySelectorAll('[required]');
     let ok = true;
     required.forEach(el => {
@@ -527,13 +535,6 @@
     });
     if (!ok) {
       alert('Please fill in all required fields and tick both checkboxes.');
-      return;
-    }
-
-    // Block if Post selected but fee not paid
-    const newsletter = document.getElementById('newsletter').value;
-    if (newsletter === 'post' && !postalFeePaid) {
-      alert('Please pay the £6 postal fee before submitting.');
       return;
     }
 
